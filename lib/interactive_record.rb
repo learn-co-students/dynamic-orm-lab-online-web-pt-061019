@@ -18,7 +18,7 @@ class InteractiveRecord
         
         column_names = []
 
-        table_info.map do |column| 
+        table_info.each do |column| 
             column_names << column["name"]
         end        
 
