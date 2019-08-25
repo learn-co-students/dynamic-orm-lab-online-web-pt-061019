@@ -73,12 +73,34 @@ class InteractiveRecord
 
   def self.find_by_name(name)
     sql = <<-SQL
-      SELECT * FROM #{self.table_name_for_insert} WHERE name = #{name};
+      SELECT * FROM #{table_name} WHERE name = ?;
     SQL
 
-    DB[:conn].execute(sql)
+    DB[:conn].execute(sql, name)
   end
 
-  def self.find_by
+  def self.find_by(hash)
+    attribute = hash.first[0].to_s
+    value = hash.first[1]
+
+    if attribute == attribute.to_i
+      attribute = attribute.to_i
+    end
+
+    sql = <<-SQL
+        SELECT * FROM #{table_name} WHERE #{attribute} = "#{value}";
+    SQL
+
+    # select * from table where columnname =
+
+    # inputs = []
+    # hash.each do |attribute, value|
+    #   inputs <<
+    # end
+    # key = "value"
+
+    DB[:conn].execute(sql)
+
+    # {name: "Susan"}
   end
 end
