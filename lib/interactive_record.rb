@@ -51,9 +51,17 @@ def self.find_by_name(input)
   DB[:conn].execute(sql, input)
 end
 
-def self.find_by(input)
- sql = "SELECT * FROM #{self.table_name} WHERE grade = 10"
- DB[:conn].execute(sql)
-end
+
+  def self.find_by(attribute_hash)
+    value = attribute_hash.values.first
+    if value.class == Fixnum
+      formatted_value = value
+    else
+      formatted_value = "'#{value}'"
+    end
+    sql = "SELECT * FROM #{self.table_name} WHERE #{attribute_hash.keys.first} = #{formatted_value}"
+    DB[:conn].execute(sql)
+  end
+
 
 end
